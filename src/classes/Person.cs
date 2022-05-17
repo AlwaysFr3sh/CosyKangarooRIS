@@ -1,4 +1,4 @@
-namespace CosyKangaroo { 
+namespace CosyKangaroo.classes { 
  class Person {
     public Person(string id, string name, string address, string phoneNumber) {
       ID = id;

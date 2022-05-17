@@ -1,4 +1,4 @@
-namespace CosyKangaroo {
+namespace CosyKangaroo.classes {
   class Order {
     public Order() {
       OrderItems = new Dictionary<string, decimal>();

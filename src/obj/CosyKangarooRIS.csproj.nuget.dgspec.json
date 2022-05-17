@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/CosyKangarooRIS.csproj": {}
+    "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/src/CosyKangarooRIS.csproj": {}
   },
   "projects": {
-    "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/CosyKangarooRIS.csproj": {
+    "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/src/CosyKangarooRIS.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/CosyKangarooRIS.csproj",
+        "projectUniqueName": "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/src/CosyKangarooRIS.csproj",
         "projectName": "CosyKangarooRIS",
-        "projectPath": "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/CosyKangarooRIS.csproj",
+        "projectPath": "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/src/CosyKangarooRIS.csproj",
         "packagesPath": "/Users/tomhollo/.nuget/packages/",
-        "outputPath": "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/obj/",
+        "outputPath": "/Users/tomhollo/Documents/uni/SoftwareArchitecture/CosyKangarooRIS/src/obj/",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
