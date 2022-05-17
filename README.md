@@ -14,6 +14,7 @@ https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code?p
 # Run the program with dotnet cli
 
 ```
+cd src/
 dotnet run
 ```
 Or click the play button on vscode / visual studio etc. 
