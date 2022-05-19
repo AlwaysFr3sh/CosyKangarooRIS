@@ -1,7 +1,10 @@
+using System;
+
 namespace CosyKangaroo.classes {
   class Order {
     public Order() {
       OrderItems = new Dictionary<string, decimal>();
+      OrderTime = DateTime.Now;
     }
 
     public Order(Dictionary<string, decimal> _OrderItems) {
@@ -10,6 +13,8 @@ namespace CosyKangaroo.classes {
     
     // dictionary of item : price
     private Dictionary<string, decimal> OrderItems { get; set; } 
+
+    private DateTime OrderTime { get; set; }
 
     // Returns Total cost of Order
     public decimal OrderTotal() {
