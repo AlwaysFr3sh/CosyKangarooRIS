@@ -19,3 +19,29 @@ dotnet run
 ```
 Or click the play button on vscode / visual studio etc. 
 
+# Database
+I am going to use sql.server.
+
+# Architecture
+
+I started implementing classes based on what we specified in our Assignment 2,
+
+however I am starting to think it would make more sense to split our classes up to separate business logic from 
+our data objects
+
+what we specified (to me) looks like this:
+
+`ui -> classes -> database`
+
+However I think we should implement it like this:
+
+`ui logic -> Business Logic -> Data classes -> Database`
+
+this specific architecture is called "Three tiered architecture design" according to this website:
+
+https://www.codeauthority.com/Blog/Entry/three-tier-architecture#:~:text=A%20three%2Dtiered%20architectural%20design,and%20maintained%20as%20independent%20modules.
+
+To start with I think we should start with the database and work up to the ui
+depending on how much time we have, we can make a simple cli interface, or we could port to .net asp website
+
+let me know what you guys think.
