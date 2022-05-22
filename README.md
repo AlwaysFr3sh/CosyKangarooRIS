@@ -20,7 +20,7 @@ dotnet run
 Or click the play button on vscode / visual studio etc. 
 
 # Database
-I am going to try using 'litedb' because the other ones look too hard
+I am going to try using 'sqllite' because the other ones look too hard
 
 # Architecture
 
