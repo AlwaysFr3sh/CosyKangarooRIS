@@ -24,24 +24,12 @@ I am going to try using 'sqllite' because the other ones look too hard
 
 # Architecture
 
-I started implementing classes based on what we specified in our Assignment 2,
+Based on our Assignment 2 it looks like what we're going for is Models Views Controllers Architecture
+where models are basically the classes we specified.
 
-however I am starting to think it would make more sense to split our classes up to separate business logic from 
-our data objects
+literally found a similar past project from this same unit
 
-what we specified (to me) looks like this:
+am going to start working on this as a cli application however if we have time I would like to try porting this
+to asp .net (web framework I'm pretty sure) which uses mvc so it may end up being not too hard. 
 
-`ui -> classes -> database`
 
-However I think we should implement it like this:
-
-`ui logic -> Business Logic -> Data classes -> Database`
-
-this specific architecture is called "Three tiered architecture design" according to this website:
-
-https://www.codeauthority.com/Blog/Entry/three-tier-architecture#:~:text=A%20three%2Dtiered%20architectural%20design,and%20maintained%20as%20independent%20modules.
-
-To start with I think we should start with the database and work up to the ui
-depending on how much time we have, we can make a simple cli interface, or we could port to .net asp website
-
-let me know what you guys think.
