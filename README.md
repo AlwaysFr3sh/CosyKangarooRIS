@@ -20,8 +20,9 @@ dotnet run
 Or click the play button on vscode / visual studio etc. 
 
 # Database
-I am going to try using 'sqllite' because the other ones look too hard
-to run without an error you might need to add the sqlite package to your directory (not sure if it's being tracked on git, will check later)
+I am going to try using 'sqllite' because the other ones look too hard.
+
+To run without an error you might need to add the sqlite package to your directory (not sure if it's being tracked on git, will check later)
 
 ### .net cli
 ```
