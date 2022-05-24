@@ -10,6 +10,17 @@ https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
 I set up the project using microsoft's tutorial found here:
 https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code?pivots=dotnet-6-0
+# Architecture
+
+To start with I was aiming for this:
+
+https://www.codeauthority.com/Blog/Entry/three-tier-architecture
+
+As our Project's architecture, although 'MVC' is also a strong option:
+
+https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
+
+still early days so we can quite easily refactor.
 
 # Run the program with dotnet cli
 
