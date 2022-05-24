@@ -8,9 +8,13 @@ namespace CosyKangaroo.Models {
   }
 
   class CardDetails : PaymentMethod {
-    public CardDetails() {
-
-    }
+    string CardName;
+		int CardNumber;
+		
+		public CardDetails(string pCardName, int pCardNumber) {
+			CardName = pCardName;
+			CardNumber = pCardNumber;
+		}
   }
 
   class Cash : PaymentMethod {
