@@ -11,9 +11,12 @@ namespace CosyKangaroo.Presentation {
 
     private static Person LoggedInUser; 
 
+    // This is so scuffed right now
     public static void Display() {
       Console.Clear();
       Console.WriteLine("==========WELCOME!!!==========");
+      if (LoggedInUser != null)
+        Console.WriteLine($"Logged in as {LoggedInUser.GetName()}");
 
       Console.WriteLine("0. Exit");
       for (int i = 0; i<views.Count; i++) {
