@@ -2,8 +2,10 @@ using System;
 
 namespace CosyKangaroo.Models {
   class Payment {
-    public Payment() {
 
+    public Payment(decimal amount, PaymentMethod method) {
+      Amount = amount;
+      Method = method;
     }
 
     private decimal Amount { get; set; }

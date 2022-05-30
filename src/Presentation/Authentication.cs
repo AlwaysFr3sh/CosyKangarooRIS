@@ -8,28 +8,51 @@ namespace CosyKangaroo.Presentation {
       DisplayName = name;
     }
     
-    // TODO: Add validation
+    // TODO(tom): Add elegant validation, I made this to make the warning go away but it sucks.
     public override void Display() {
       Console.Clear();
       // Retrieve Username
       Console.WriteLine("Please enter a username");
       var username =  Console.ReadLine();
+      // Validate 
+      while (String.IsNullOrEmpty(username)) {
+        Console.WriteLine("username cannot be empty, please input a valid username");
+        username = Console.ReadLine();
+      }
+
       //Retrieve Password
       Console.WriteLine("Please enter a password");
       var password = Console.ReadLine();
+      // Validate 
+      while (String.IsNullOrEmpty(password)) {
+        Console.WriteLine("password cannot be empty, please input a valid password");
+        password = Console.ReadLine();
+      }
+
       // Retrieve Address
       Console.WriteLine("Please enter an address");
       var address = Console.ReadLine();
+      // Validate
+      while (String.IsNullOrEmpty(address)) {
+        Console.WriteLine("address cannot be empty, please input a valid address");
+        address = Console.ReadLine();
+      }
+
       // Retrieve Phone Number
       Console.WriteLine("Please enter a phone number");
       var phone = Console.ReadLine();
+      while (String.IsNullOrEmpty(phone)) {
+        Console.WriteLine("phone number cannot be empty, please input a valid phone number");
+        phone = Console.ReadLine();
+      }
+
       // Register user into the database
       try {
         DatabaseInterface.RegisterUser(new Person(username, address, phone), password);
         Console.WriteLine($"Successfully registered user: {username}");
         Console.ReadLine();
         MainMenu.Display();
-      } catch (Exception e) {
+      } catch {
         Console.WriteLine("That username already exists");
         Console.ReadLine();
         Display();
@@ -50,9 +73,16 @@ namespace CosyKangaroo.Presentation {
 
       Console.WriteLine("Please enter a username");
       var username = Console.ReadLine();
+      while (String.IsNullOrEmpty(username)) {
+        Console.WriteLine("username cannot be empty");
+        username = Console.ReadLine();
+      }
 
       Console.WriteLine("Please enter a password");
       var password = Console.ReadLine();
+      while (String.IsNullOrEmpty(password)) {
+        Console.WriteLine("password cannot be empty");
+      }
 
       // Check that user exists
       userExists = DatabaseInterface.UserExists(username);

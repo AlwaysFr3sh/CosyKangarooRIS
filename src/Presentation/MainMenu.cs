@@ -9,13 +9,13 @@ namespace CosyKangaroo.Presentation {
 
     private static List<View> views = new List<View>(); 
 
-    private static Person LoggedInUser; 
+    private static Person LoggedInUser = new Person();
 
     // This is so scuffed right now
     public static void Display() {
       Console.Clear();
       Console.WriteLine("==========WELCOME!!!==========");
-      if (LoggedInUser != null)
+      if (LoggedInUser.GetID() != "-1")
         Console.WriteLine($"Logged in as {LoggedInUser.GetName()}");
 
       Console.WriteLine("0. Exit");
@@ -47,7 +47,7 @@ namespace CosyKangaroo.Presentation {
     }
 
     public static void LogOut() {
-      LoggedInUser = null;
+      LoggedInUser = new Person();
     }
   }
 }

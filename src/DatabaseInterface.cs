@@ -7,10 +7,10 @@ namespace CosyKangaroo.Database {
   public static class DatabaseInterface {
 
     public static string ConnectionString = "DataSource=mydatabase.db;Version=3;New=True;Compress=True;";
-    public static SQLiteConnection sqlite_conn;
+    public static SQLiteConnection sqlite_conn = new SQLiteConnection(ConnectionString);
 
     public static void OpenDatabaseConnection() {
-      sqlite_conn = new SQLiteConnection(ConnectionString);
+      //sqlite_conn = new SQLiteConnection(ConnectionString);
       try {
         sqlite_conn.Open();
       } 
@@ -25,8 +25,12 @@ namespace CosyKangaroo.Database {
     // Returns database version (for testing purposes)
     public static string DatabaseVersion() {
       string stm = "SELECT SQLITE_VERSION()";
-      using var cmd = new SQLiteCommand(stm, sqlite_conn);
-      string version = cmd.ExecuteScalar().ToString();
+      using var sqlite_cmd = new SQLiteCommand(stm, sqlite_conn);
+      //string version = cmd.ExecuteScalar().ToString();
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      rdr.Read();
+      string version = rdr.GetString(0);
+      rdr.Close();
 
       return version;
     }
@@ -64,7 +68,11 @@ namespace CosyKangaroo.Database {
       sqlite_cmd = sqlite_conn.CreateCommand();
       sqlite_cmd.CommandText = "SELECT password FROM person WHERE username = @username";
       sqlite_cmd.Parameters.AddWithValue("@username", username);
-      string ret = sqlite_cmd.ExecuteScalar().ToString();
+      //string ret = sqlite_cmd.ExecuteScalar().ToString();
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      rdr.Read();
+      string ret = rdr.GetString(0);
+      rdr.Close();
 
       return ret == password;
     }

@@ -10,12 +10,12 @@ namespace CosyKangaroo {
       DatabaseInterface.OpenDatabaseConnection();
 
       // testing views
-      RegistrationView registrationView = new RegistrationView("Register");
+      /*RegistrationView registrationView = new RegistrationView("Register");
       LoginView loginView = new LoginView("Login");
       LogoutView logoutView = new LogoutView("logout");
       View[] views = new View[] {registrationView, loginView, logoutView};
       MainMenu.AddView(views);
-      MainMenu.Display();
+      MainMenu.Display();*/
 
       // Close databse
       DatabaseInterface.CloseDatabaseConnection();
