@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using System.Data.SQLite;
 using CosyKangaroo.Models;
 
@@ -93,6 +94,33 @@ namespace CosyKangaroo.Database {
       rdr.Close();
 
       return ret;
+    }
+
+    public static void AddReservation(Reservation reservation) {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "INSERT INTO reservations (customerName, patrons, resDate, resTime) VALUES ($customerName, $patrons, $resDate, $resTime);";
+      sqlite_cmd.Parameters.AddWithValue("$customerName", reservation.GetReservationCustomer());
+      sqlite_cmd.Parameters.AddWithValue("$patrons", reservation.GetReservationPatrons());
+      sqlite_cmd.Parameters.AddWithValue("$resDate", reservation.GetReservationDate());
+      sqlite_cmd.Parameters.AddWithValue("$resTime", reservation.GetReservationTime());
+      sqlite_cmd.ExecuteNonQuery();
+    }
+
+    public static void ShowReservations() {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM reservations";
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      while (rdr.Read()){
+        ReadSingleRow((IDataRecord)rdr);
+      }
+      rdr.Close();
+    }
+
+    private static void ReadSingleRow(IDataRecord dataRecord)
+    {
+        Console.WriteLine(String.Format("{0}, {1}, {2}, {3}, {4}", dataRecord[0], dataRecord[1], dataRecord[2], dataRecord[3], dataRecord[4]));
     }
   }
 }

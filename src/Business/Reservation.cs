@@ -2,13 +2,43 @@ using System;
 
 namespace CosyKangaroo.Models {
   // will need to be extended
-  class Reservation {
-    public Reservation() {
-
+  public class Reservation {
+    public Reservation(string CustomerName, int Patrons, string Date, string Time) {
+      ReservationCustomer = CustomerName;
+      ReservationPatrons = Patrons;
+      ReservationDate = Date;
+      ReservationTime = Time;
     }
-     private string ReservationID { get; set; }
-     private Customer ReservationCustomer { get; set; }
-     private Waiter ReservationWaiter { get; set; }
-     private DateTime ReservationTime { get; set; }
+
+    public Reservation() {
+      ReservationCustomer = "Customer";
+      ReservationPatrons = 0;
+      ReservationDate = "Null";
+      ReservationTime = "Null";
+    }
+     private string ReservationCustomer { get; set; }
+     private int ReservationPatrons { get; set; }
+     private string ReservationDate { get; set; }
+     private string ReservationTime { get; set; }
+
+    public string GetReservationCustomer() {
+      return ReservationCustomer;
+    }
+
+    public int GetReservationPatrons() {
+      return ReservationPatrons;
+    }
+
+    public string GetReservationDate() {
+      return ReservationDate;
+    }
+
+    public string GetReservationTime() {
+      return ReservationTime;
+    }
+
+
+
+
   }
 }

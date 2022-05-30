@@ -126,4 +126,53 @@ namespace CosyKangaroo.Presentation {
       MainMenu.Display();
     }
   }
+
+  class AddReservationView : View {
+    public AddReservationView(string name) {
+      DisplayName = name;
+    }
+    public override void Display() {
+      Console.Clear();
+      Console.WriteLine("Customer Name:");
+      var customerName = Console.ReadLine();
+            while (String.IsNullOrEmpty(customerName)) {
+        Console.WriteLine("Customer name cannot be empty");
+        customerName = Console.ReadLine();
+      }
+      Console.WriteLine("Number of Patrons:");
+      var numOfPatrons = Console.ReadLine();
+                  while (String.IsNullOrEmpty(numOfPatrons)) {
+        Console.WriteLine("Number of patrons cannot be empty");
+        numOfPatrons = Console.ReadLine();
+      }
+      var numOfPatronsClean = Convert.ToInt32(numOfPatrons);
+
+      Console.WriteLine("Date of Booking");
+      var dateOfBooking = Console.ReadLine();
+            while (String.IsNullOrEmpty(dateOfBooking)) {
+        Console.WriteLine("username cannot be empty");
+        dateOfBooking = Console.ReadLine();
+      }
+      Console.WriteLine("Time of Booking");
+      var timeOfBooking = Console.ReadLine();
+            while (String.IsNullOrEmpty(timeOfBooking)) {
+        Console.WriteLine("username cannot be empty");
+        timeOfBooking = Console.ReadLine();
+      }
+
+      DatabaseInterface.AddReservation(new Reservation(customerName, numOfPatronsClean, dateOfBooking, timeOfBooking));
+      Console.WriteLine($"Successfully created reservation for: {customerName}");
+      Console.ReadLine();
+      MainMenu.Display();
+    }
+  }
+
+  class ShowReservationView : View {
+    public ShowReservationView(string name) {
+      DisplayName = name;
+    }
+    public override void Display() {
+      DatabaseInterface.ShowReservations();
+    }
+  }
 }
