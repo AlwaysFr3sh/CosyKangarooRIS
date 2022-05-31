@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Data;
 using System.Data.SQLite;
 using CosyKangaroo.Models;
@@ -45,7 +46,9 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.Parameters.AddWithValue("$rowValue", rowValue);
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
       rdr.Read();
-      string ret = rdr.GetValue(0).ToString();
+      // the ? signifies that ret is nullable, this is to silence the warnings!!!
+      string? ret = rdr.GetValue(0).ToString();
+
       rdr.Close();
       return ret == rowValue;
     }
@@ -123,7 +126,7 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.ExecuteNonQuery();
     }
 
-    public static void ShowReservations() {
+    /*public static void ShowReservations() {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
       sqlite_cmd.CommandText = "SELECT * FROM reservations";
@@ -132,6 +135,19 @@ namespace CosyKangaroo.Database {
         ReadSingleRow((IDataRecord)rdr);
       }
       rdr.Close();
+    }*/
+
+    // New Show Reservations
+    public static void ShowReservations() {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM reservations";
+      
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      List<List<string>> table = GetTableData(rdr);
+      rdr.Close();
+
+      DisplayTableData(table);
     }
 
     public static void RemoveReservation(string reservationID) {
@@ -145,6 +161,47 @@ namespace CosyKangaroo.Database {
     private static void ReadSingleRow(IDataRecord dataRecord)
     {
         Console.WriteLine(String.Format("{0}, {1}, {2}, {3}, {4}", dataRecord[0], dataRecord[1], dataRecord[2], dataRecord[3], dataRecord[4]));
+    }
+
+    // Returns table data in 2d list of string (Should we be using DataTable here?)
+    private static List<List<string>> GetTableData(SQLiteDataReader rdr) {
+      List<List<string>> ret = new List<List<string>>(); 
+      
+      // Add column data
+      while (rdr.Read()) {
+        List<string> listy = new List<string>();
+        for (int i=0; i<rdr.FieldCount; i++) {
+          string item = "";
+          listy.Add(item + rdr.GetValue(i).ToString());
+        }
+        ret.Add(listy);
+      }
+
+      // Add column names
+      List<string> columnNames = new List<string>();
+      for (int i=0; i<rdr.FieldCount; i++) {
+        columnNames.Add(rdr.GetName(i));
+      }
+      // insert column names at the beginning of the table
+      ret.Insert(0, columnNames);
+
+      return ret;
+    }
+
+    // Draw a table
+    public static void DisplayTableData(List<List<string>> table) {
+      // Get the longest string from our table, this will be our column width
+      // TODO: do this for each column individually
+      int columnWidth = table.SelectMany( i => i).Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur).Length;
+      foreach (List<string> row in table) {
+        // Append whitespace to strings to fit column width
+        for (int i=0; i < row.Count; i++) {
+          //Console.Write(row[i] + (" " * (columnWidth - row[i].Length)) + "|");
+          Console.Write(row[i].PadRight(columnWidth) + "|");
+        }
+        // Clean way to do new line
+        Console.WriteLine("");
+      }
     }
   }
 }
