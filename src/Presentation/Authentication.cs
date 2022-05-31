@@ -176,35 +176,90 @@ namespace CosyKangaroo.Presentation {
     }
   }
 
-  // Currently I am just removing from the database here, however it is also an option to 
-  // add a row to the reservations table called "status" or something that we could set to "cancelled" here 
-  // instead of straight up removing it, which might be a better solution, however I will leave it like this for now
-  class RemoveReservationView : View {
-    public RemoveReservationView(string name) {
+class AddOrderView : View {
+    public AddOrderView(string name) {
       DisplayName = name;
     }
 
+    public void placeOrder(Table table){
+      bool repeat = true;
+      int counter = 1;
+        while(repeat){
+          var itemID = Console.ReadLine();
+          while (String.IsNullOrEmpty(itemID)) {
+            Console.WriteLine("Item ID cannot be empty");
+            itemID = Console.ReadLine();
+          }
+          var itemIDClean = Convert.ToInt32(itemID);
+
+          var quantity = Console.ReadLine();
+          while (String.IsNullOrEmpty(quantity)) {
+            Console.WriteLine("Quantity cannot be empty");
+            quantity = Console.ReadLine();
+          }
+          var quantityClean = Convert.ToInt32(quantity);
+
+          float price = DatabaseInterface.getItemPrice(itemIDClean); //get price from db
+          string name = DatabaseInterface.getItemName(itemIDClean); //get name from db
+          Order order = new Order(itemIDClean, name, price, quantityClean);
+
+          DatabaseInterface.addOrder(order, table);
+          Console.WriteLine($"Successfully placed Order " + counter + " for table " + table.tableNumber);
+
+          var repeatInput = Console.ReadLine();
+          Console.WriteLine("Do you wish to place another order?");
+          repeatInput = Console.ReadLine();
+          if(repeatInput.ToLower() == "y"){
+            counter++;
+            placeOrder(table);
+          }
+          if(repeatInput.ToLower() == "n"){
+            repeat = false;
+          }
+          else{
+            Console.WriteLine("Invalid input, please enter Y or N");
+          }
+        }
+    }
+
     public override void Display() {
-      // show reservations to display
-      DatabaseInterface.ShowReservations();
-      Console.WriteLine("Select a Reservation by ID to remove");
-      var reservationID = Console.ReadLine();
-      // Validate that the given id is a valid int, however we will use the string value in practice
-      // TODO: also validate that the selected reservation id actually exists
-      while (!int.TryParse(reservationID, out int reservationIDInt)) {
-        Console.WriteLine("Please enter a valid Reservation ID");
-        reservationID = Console.ReadLine();
+      Console.Clear();
+      Console.WriteLine("Table Number:");
+      var tableNumber = Console.ReadLine();
+            while (String.IsNullOrEmpty(tableNumber)) {
+        Console.WriteLine("Table Number cannot be empty");
+        tableNumber = Console.ReadLine();
       }
-      // Check that the user specified row actually exists
-      if (!DatabaseInterface.RowExists("reservations", "id", reservationID)) {
-        Console.WriteLine("The row you specified does not exist");
-      } else {
-        // Remove reservation here
-        DatabaseInterface.RemoveReservation(reservationID);
-        Console.WriteLine($"Removed reservation id: {reservationID}");
+      var tableNumberClean = Convert.ToInt32(tableNumber);
+
+      Console.WriteLine("Number of Patrons:");
+      var numOfPatrons = Console.ReadLine();
+                  while (String.IsNullOrEmpty(numOfPatrons)) {
+        Console.WriteLine("Number of patrons cannot be empty");
+        numOfPatrons = Console.ReadLine();
       }
+      var numOfPatronsClean = Convert.ToInt32(numOfPatrons);   
+
+      Table currentTable = new Table(tableNumberClean, numOfPatronsClean, DateTime.Now.ToString("dd/MM/yyyy"), DateTime.Now.ToString("HH:mm"));
+      DatabaseInterface.createSitting(currentTable);
+      placeOrder(currentTable);
+
+      Console.WriteLine($"Successfully created Order for Table: {tableNumberClean}");
       Console.ReadLine();
       MainMenu.Display();
+    }
+  }
+
+
+
+
+  class ShowOrdersView : View {
+    public ShowOrdersView(string name){
+      DisplayName = name;
+    }
+
+    public override void Display(){
+      DatabaseInterface.ShowOrders();
     }
   }
 }
