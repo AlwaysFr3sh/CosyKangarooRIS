@@ -36,6 +36,20 @@ namespace CosyKangaroo.Database {
       return version;
     }
 
+    public static bool RowExists(string table, string rowName, string rowValue) {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = $"SELECT {rowName} FROM {table} WHERE {rowName} = $rowValue;";
+      //sqlite_cmd.Parameters.AddWithValue("$table", table);
+      //sqlite_cmd.Parameters.AddWithValue("$rowName", rowName);
+      sqlite_cmd.Parameters.AddWithValue("$rowValue", rowValue);
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      rdr.Read();
+      string ret = rdr.GetValue(0).ToString();
+      rdr.Close();
+      return ret == rowValue;
+    }
+
     // an assumption I wrote in Assignment2 said we aren't doing encryption so I won't worry about that here - Tom
     public static void RegisterUser(Person user, string password) {
       SQLiteCommand sqlite_cmd;
@@ -49,10 +63,12 @@ namespace CosyKangaroo.Database {
     }
 
     // check if user exists provided a username
+    // UserExists is now deprecated, use RowExists instead :)
+    // TODO: convert any UserExists usage to RowExists
     public static bool UserExists(string username) {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
-      sqlite_cmd.CommandText = "SELECT username FROM person WHERE username = @username";
+      sqlite_cmd.CommandText = "SELECT username FROM person WHERE username = @username;";
       sqlite_cmd.Parameters.AddWithValue("@username", username);
       //string ret = sqlite_cmd.ExecuteScalar().ToString(); 
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
@@ -67,7 +83,7 @@ namespace CosyKangaroo.Database {
     public static bool AuthenticatePassword(string username, string password) {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
-      sqlite_cmd.CommandText = "SELECT password FROM person WHERE username = @username";
+      sqlite_cmd.CommandText = "SELECT password FROM person WHERE username = @username;";
       sqlite_cmd.Parameters.AddWithValue("@username", username);
       //string ret = sqlite_cmd.ExecuteScalar().ToString();
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
@@ -116,6 +132,14 @@ namespace CosyKangaroo.Database {
         ReadSingleRow((IDataRecord)rdr);
       }
       rdr.Close();
+    }
+
+    public static void RemoveReservation(string reservationID) {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "DELETE FROM reservations WHERE id = $reservationID;";
+      sqlite_cmd.Parameters.AddWithValue("$reservationID", reservationID);
+      sqlite_cmd.ExecuteNonQuery();
     }
 
     private static void ReadSingleRow(IDataRecord dataRecord)

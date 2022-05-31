@@ -15,7 +15,8 @@ namespace CosyKangaroo {
       LogoutView logoutView = new LogoutView("logout");
       AddReservationView addreservationView = new AddReservationView("Add Reservation");
       ShowReservationView showreservationview = new ShowReservationView("Show Reservations");
-      View[] views = new View[] {registrationView, loginView, logoutView, addreservationView, showreservationview};
+      RemoveReservationView removeReservationView = new RemoveReservationView("Remove a Reservation");
+      View[] views = new View[] {registrationView, loginView, logoutView, addreservationView, showreservationview, removeReservationView};
       MainMenu.AddView(views);
       MainMenu.Display();
 
