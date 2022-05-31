@@ -24,4 +24,23 @@ CREATE TABLE IF NOT EXISTS reservations (
 	patrons INTEGER NOT NULL,
 	resDate TEXT NOT NULL,
 	resTime TEXT NOT NULL
-)
+);
+
+
+CREATE TABLE IF NOT EXISTS TableDetails (
+	SaleID INTEGER PRIMARY KEY AUTOINCREMENT,
+	TableNumber TEXT NOT NULL,
+	patrons INTEGER NOT NULL,
+	TableDate TEXT NOT NULL,
+	TableTime TEXT NOT NULL
+);
+
+-- One-to-Many Relationship between TableDetails and orders
+-- Manys orders are possible for the single table
+CREATE TABLE IF NOT EXISTS orders (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	TableNumber TEXT NOT NULL REFERENCES TableDetails(TableNumber),
+	itemid INTEGER NOT NULL REFERENCES item(id),
+	quantity INTEGER NOT NULL,
+	kitchenstatus TEXT NOT NULL
+);

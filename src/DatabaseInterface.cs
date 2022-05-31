@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Data;
 using System.Data.SQLite;
 using CosyKangaroo.Models;
@@ -37,22 +36,6 @@ namespace CosyKangaroo.Database {
       return version;
     }
 
-    public static bool RowExists(string table, string rowName, string rowValue) {
-      SQLiteCommand sqlite_cmd;
-      sqlite_cmd = sqlite_conn.CreateCommand();
-      sqlite_cmd.CommandText = $"SELECT {rowName} FROM {table} WHERE {rowName} = $rowValue;";
-      //sqlite_cmd.Parameters.AddWithValue("$table", table);
-      //sqlite_cmd.Parameters.AddWithValue("$rowName", rowName);
-      sqlite_cmd.Parameters.AddWithValue("$rowValue", rowValue);
-      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
-      rdr.Read();
-      // the ? signifies that ret is nullable, this is to silence the warnings!!!
-      string? ret = rdr.GetValue(0).ToString();
-
-      rdr.Close();
-      return ret == rowValue;
-    }
-
     // an assumption I wrote in Assignment2 said we aren't doing encryption so I won't worry about that here - Tom
     public static void RegisterUser(Person user, string password) {
       SQLiteCommand sqlite_cmd;
@@ -66,12 +49,10 @@ namespace CosyKangaroo.Database {
     }
 
     // check if user exists provided a username
-    // UserExists is now deprecated, use RowExists instead :)
-    // TODO: convert any UserExists usage to RowExists
     public static bool UserExists(string username) {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
-      sqlite_cmd.CommandText = "SELECT username FROM person WHERE username = @username;";
+      sqlite_cmd.CommandText = "SELECT username FROM person WHERE username = @username";
       sqlite_cmd.Parameters.AddWithValue("@username", username);
       //string ret = sqlite_cmd.ExecuteScalar().ToString(); 
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
@@ -86,7 +67,7 @@ namespace CosyKangaroo.Database {
     public static bool AuthenticatePassword(string username, string password) {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
-      sqlite_cmd.CommandText = "SELECT password FROM person WHERE username = @username;";
+      sqlite_cmd.CommandText = "SELECT password FROM person WHERE username = @username";
       sqlite_cmd.Parameters.AddWithValue("@username", username);
       //string ret = sqlite_cmd.ExecuteScalar().ToString();
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
@@ -126,7 +107,7 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.ExecuteNonQuery();
     }
 
-    /*public static void ShowReservations() {
+    public static void ShowReservations() {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
       sqlite_cmd.CommandText = "SELECT * FROM reservations";
@@ -135,19 +116,6 @@ namespace CosyKangaroo.Database {
         ReadSingleRow((IDataRecord)rdr);
       }
       rdr.Close();
-    }*/
-
-    // New Show Reservations
-    public static void ShowReservations() {
-      SQLiteCommand sqlite_cmd;
-      sqlite_cmd = sqlite_conn.CreateCommand();
-      sqlite_cmd.CommandText = "SELECT * FROM reservations";
-      
-      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
-      List<List<string>> table = GetTableData(rdr);
-      rdr.Close();
-
-      DisplayTableData(table);
     }
 
     public static void RemoveReservation(string reservationID) {
@@ -157,7 +125,6 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.Parameters.AddWithValue("$reservationID", reservationID);
       sqlite_cmd.ExecuteNonQuery();
     }
-
     private static void ReadSingleRow(IDataRecord dataRecord)
     {
         Console.WriteLine(String.Format("{0}, {1}, {2}, {3}, {4}", dataRecord[0], dataRecord[1], dataRecord[2], dataRecord[3], dataRecord[4]));
@@ -203,5 +170,65 @@ namespace CosyKangaroo.Database {
         Console.WriteLine("");
       }
     }
+    //needs to be populated
+    public static void createSitting(Table currentTable) {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "INSERT INTO TableDetails (TableNumber, patrons, TableDate, TableTime) VALUES ($TableNumber, $patrons, $TableDate, $TableTime);";
+      sqlite_cmd.Parameters.AddWithValue("$TableNumber", currentTable.tableNumber);
+      sqlite_cmd.Parameters.AddWithValue("$patrons", currentTable.numberOfPatrons);
+      sqlite_cmd.Parameters.AddWithValue("$TableDate", currentTable.date);
+      sqlite_cmd.Parameters.AddWithValue("$TableTime", currentTable.time);
+      sqlite_cmd.ExecuteNonQuery();
+    }
+
+
+    public static void addOrder(Order order, Table table){
+      string Status = "Pending";
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "INSERT INTO orders (TableNumber, itemid, quantity, kitchenstatus) VALUES ($TableNumber, $itemid, $quantity, $kitchenstatus);";
+      sqlite_cmd.Parameters.AddWithValue("$TableNumber", table.tableNumber);
+      sqlite_cmd.Parameters.AddWithValue("$itemid", order.ID);
+      sqlite_cmd.Parameters.AddWithValue("$quantity", order.Quantity);
+      sqlite_cmd.Parameters.AddWithValue("$kitchenstatus", Status);
+      sqlite_cmd.ExecuteNonQuery();
+    }
+
+    public static void ShowOrders(){
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM orders";
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      while (rdr.Read()){
+        ReadSingleRow((IDataRecord)rdr);
+      }
+      rdr.Close();
+    }
+
+    public static float getItemPrice(int id){
+      float result = 0;
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM item where id = " + id;
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      while(rdr.Read()){
+        result = (float)rdr.GetDecimal(0);
+      }
+      return result;
+    } 
+
+    public static string getItemName(int id){
+      string result = "";
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM item where id = " + id;
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      while(rdr.Read()){
+        result = rdr.GetString(0);
+      }
+      return result;
+    } 
+
   }
 }

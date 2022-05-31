@@ -3,11 +3,16 @@ using System;
 namespace CosyKangaroo.Models {
   // Will need to be extended
   class Receipt {
-    public Receipt(string saleID, Order receiptOrder) {
-      SaleID = saleID;
-      ReceiptOrder = receiptOrder;
+    public Receipt() {
     }
-    private string SaleID { get; set; }
-    private Order ReceiptOrder { get; set; }
+    public void printReceipt(Table table){
+      Console.WriteLine("Date: " + table.date + "\t Time: " + table.time);
+      Console.WriteLine("Table: " + table.tableNumber);
+      
+      foreach(Order order in table.completeOrder){
+        Console.WriteLine(order.Name + "\t" + order.Price + " x" + order.Quantity);
+      }
+      Console.WriteLine("Total Price: " + table.getTotalPrice());
+    }
   }
 }

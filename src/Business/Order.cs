@@ -1,40 +1,18 @@
 using System;
 
 namespace CosyKangaroo.Models {
-  class Order {
-    public Order() {
-      OrderItems = new Dictionary<string, decimal>();
-      OrderTime = DateTime.Now;
-    }
 
-    public Order(Dictionary<string, decimal> _OrderItems) {
-      OrderItems = _OrderItems;
+  public struct Order
+  {
+    public Order(int id, string name, float price, int quantity){
+      ID = id;
+      Name = name;
+      Price = price;
+      Quantity = quantity;
     }
-    
-    // dictionary of item : price
-    private Dictionary<string, decimal> OrderItems { get; set; } 
-
-    private DateTime OrderTime { get; set; }
-
-    // Returns Total cost of Order
-    public decimal OrderTotal() {
-      return OrderItems.Values.Sum();
-    }
-
-    // Returns collection of order items
-    public List<string> GetOrderItems() {
-      return OrderItems.Keys.ToList();
-    }
-
-    // Add Order Item
-    public void AddItem(string ItemName, decimal ItemPrice) {
-      OrderItems.Add(ItemName, ItemPrice);
-    }
-
-    // Remove Order Item
-    // WARNING, I am assuming that this will remove all items with specified name
-    public void RemoveItem(string ItemName) {
-      OrderItems.Remove(ItemName);
-    }
+    public int ID {get;}
+    public string Name{get;}
+    public float Price{get;}
+    public int Quantity{get;}
   }
 }
