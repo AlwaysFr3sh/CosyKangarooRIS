@@ -229,9 +229,11 @@ namespace CosyKangaroo.Database {
       sqlite_cmd = sqlite_conn.CreateCommand();
       sqlite_cmd.CommandText = "SELECT * FROM orders";
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
-      while (rdr.Read()){
+      /*while (rdr.Read()){
         ReadSingleRow((IDataRecord)rdr);
-      }
+      }*/
+      List<List<string>> table = GetTableData(rdr);
+      DisplayTableData(table);
       rdr.Close();
     }
 
