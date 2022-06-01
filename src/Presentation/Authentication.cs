@@ -248,6 +248,7 @@ class AddOrderView : View {
           if(repeatInput.ToLower() == "y"){
             counter++;
             placeOrder(table);
+            table.addOrder(order);
           }
           if(repeatInput.ToLower() == "n"){
             repeat = false;
