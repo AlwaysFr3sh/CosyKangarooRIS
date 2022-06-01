@@ -176,6 +176,42 @@ namespace CosyKangaroo.Presentation {
     }
   }
 
+
+  // Currently I am just removing from the database here, however it is also an option to 
+  // add a row to the reservations table called "status" or something that we could set to "cancelled" here 
+  // instead of straight up removing it, which might be a better solution, however I will leave it like this for now
+  class RemoveReservationView : View {
+    public RemoveReservationView(string name) {
+      DisplayName = name;
+    }
+
+    public override void Display() {
+      // show reservations to display
+      DatabaseInterface.ShowReservations();
+      Console.WriteLine("Select a Reservation by ID to remove");
+      var reservationID = Console.ReadLine();
+      // Validate that the given id is a valid int, however we will use the string value in practice
+      // TODO: also validate that the selected reservation id actually exists
+      while (!int.TryParse(reservationID, out int reservationIDInt)) {
+        Console.WriteLine("Please enter a valid Reservation ID");
+        reservationID = Console.ReadLine();
+      }
+      // Check that the user specified row actually exists
+      if (!DatabaseInterface.RowExists("reservations", "id", reservationID)) {
+        Console.WriteLine("The row you specified does not exist");
+      } else {
+        // Remove reservation here
+        DatabaseInterface.RemoveReservation(reservationID);
+        Console.WriteLine($"Removed reservation id: {reservationID}");
+      }
+      Console.ReadLine();
+      MainMenu.Display();
+    }
+  }
+
+
+
+
 class AddOrderView : View {
     public AddOrderView(string name) {
       DisplayName = name;
@@ -212,6 +248,7 @@ class AddOrderView : View {
           if(repeatInput.ToLower() == "y"){
             counter++;
             placeOrder(table);
+            table.addOrder(order);
           }
           if(repeatInput.ToLower() == "n"){
             repeat = false;
@@ -246,20 +283,9 @@ class AddOrderView : View {
 
       Console.WriteLine($"Successfully created Order for Table: {tableNumberClean}");
       Console.ReadLine();
+      Console.WriteLine("Receipt:");
+      currentTable.printReceipt();
       MainMenu.Display();
-    }
-  }
-
-
-
-
-  class ShowOrdersView : View {
-    public ShowOrdersView(string name){
-      DisplayName = name;
-    }
-
-    public override void Display(){
-      DatabaseInterface.ShowOrders();
     }
   }
 }
