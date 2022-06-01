@@ -244,7 +244,7 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.CommandText = "SELECT * FROM item where id = " + id;
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
       while(rdr.Read()){
-        result = (float)rdr.GetDecimal(0);
+        result = (float)rdr.GetDecimal(2);
       }
       return result;
     } 
@@ -256,7 +256,7 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.CommandText = "SELECT * FROM item where id = " + id;
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
       while(rdr.Read()){
-        result = rdr.GetString(0);
+        result = rdr.GetString(1);
       }
       return result;
     } 

@@ -236,28 +236,27 @@ class AddOrderView : View {
             quantity = Console.ReadLine();
           }
           var quantityClean = Convert.ToInt32(quantity);
-
           float price = DatabaseInterface.getItemPrice(itemIDClean); //get price from db
           string name = DatabaseInterface.getItemName(itemIDClean); //get name from db
           Order order = new Order(itemIDClean, name, price, quantityClean);
-
           DatabaseInterface.addOrder(order, table);
           Console.WriteLine($"Successfully placed Order " + counter + " for table " + table.tableNumber);
 
           Console.WriteLine("Do you wish to place another order?");
-          var repeatInput = Console.ReadLine();
+          var repeatInput = "";
           while (repeatInput.ToLower() != "y" || repeatInput.ToLower() != "n") {
+            repeatInput = Console.ReadLine();
             if(repeatInput.ToLower() == "y"){
               counter++;
               placeOrder(table);
               table.addOrder(order);
             }
-            if(repeatInput.ToLower() == "n"){
+            else if(repeatInput.ToLower() == "n"){
               repeat = false;
+              break;
             }
             else{
               Console.WriteLine("Invalid input, please enter Y or N");
-              repeatInput = Console.ReadLine();
             }
           }
         }
