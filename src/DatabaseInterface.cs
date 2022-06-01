@@ -36,6 +36,23 @@ namespace CosyKangaroo.Database {
       return version;
     }
 
+    public static bool RowExists(string table, string rowName, string rowValue) {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = $"SELECT {rowName} FROM {table} WHERE {rowName} = $rowValue;";
+      //sqlite_cmd.Parameters.AddWithValue("$table", table);
+      //sqlite_cmd.Parameters.AddWithValue("$rowName", rowName);
+      sqlite_cmd.Parameters.AddWithValue("$rowValue", rowValue);
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      rdr.Read();
+      //string ret = rdr.GetValue(0).ToString();
+      // the ? signifies that ret is nullable, this is to silence the warnings!!!
+      string? ret = rdr.GetValue(0).ToString();
+
+      rdr.Close();
+      return ret == rowValue;
+    }
+
     // an assumption I wrote in Assignment2 said we aren't doing encryption so I won't worry about that here - Tom
     public static void RegisterUser(Person user, string password) {
       SQLiteCommand sqlite_cmd;
@@ -107,7 +124,7 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.ExecuteNonQuery();
     }
 
-    public static void ShowReservations() {
+    /*public static void ShowReservations() {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
       sqlite_cmd.CommandText = "SELECT * FROM reservations";
@@ -116,6 +133,18 @@ namespace CosyKangaroo.Database {
         ReadSingleRow((IDataRecord)rdr);
       }
       rdr.Close();
+    }*/
+    // New Show Reservations
+    public static void ShowReservations() {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM reservations";
+
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      List<List<string>> table = GetTableData(rdr);
+      rdr.Close();
+
+      DisplayTableData(table);
     }
 
     public static void RemoveReservation(string reservationID) {
@@ -229,6 +258,5 @@ namespace CosyKangaroo.Database {
       }
       return result;
     } 
-
   }
 }
