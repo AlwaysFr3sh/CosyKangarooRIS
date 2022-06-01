@@ -244,19 +244,21 @@ class AddOrderView : View {
           DatabaseInterface.addOrder(order, table);
           Console.WriteLine($"Successfully placed Order " + counter + " for table " + table.tableNumber);
 
-          var repeatInput = Console.ReadLine();
           Console.WriteLine("Do you wish to place another order?");
-          repeatInput = Console.ReadLine();
-          if(repeatInput.ToLower() == "y"){
-            counter++;
-            placeOrder(table);
-            table.addOrder(order);
-          }
-          if(repeatInput.ToLower() == "n"){
-            repeat = false;
-          }
-          else{
-            Console.WriteLine("Invalid input, please enter Y or N");
+          var repeatInput = Console.ReadLine();
+          while (repeatInput.ToLower() != "y" || repeatInput.ToLower() != "n") {
+            if(repeatInput.ToLower() == "y"){
+              counter++;
+              placeOrder(table);
+              table.addOrder(order);
+            }
+            if(repeatInput.ToLower() == "n"){
+              repeat = false;
+            }
+            else{
+              Console.WriteLine("Invalid input, please enter Y or N");
+              repeatInput = Console.ReadLine();
+            }
           }
         }
     }
