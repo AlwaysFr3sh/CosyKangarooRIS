@@ -221,6 +221,7 @@ class AddOrderView : View {
       bool repeat = true;
       int counter = 1;
         while(repeat){
+          Console.WriteLine("Enter item ID");
           var itemID = Console.ReadLine();
           while (String.IsNullOrEmpty(itemID)) {
             Console.WriteLine("Item ID cannot be empty");
@@ -228,6 +229,7 @@ class AddOrderView : View {
           }
           var itemIDClean = Convert.ToInt32(itemID);
 
+          Console.WriteLine("Enter item quantity");
           var quantity = Console.ReadLine();
           while (String.IsNullOrEmpty(quantity)) {
             Console.WriteLine("Quantity cannot be empty");
