@@ -1,7 +1,7 @@
 using System.Data.SQLite;
 
-namespace CosyKangaroo.Utils {
-  public static class Util {
+namespace CosyKangaroo.Utilities {
+  public static class Utils {
     // Returns table data in 2d list of string (Should we be using DataTable here?)
     public static List<List<string>> GetTableData(SQLiteDataReader rdr) {
       List<List<string>> ret = new List<List<string>>(); 

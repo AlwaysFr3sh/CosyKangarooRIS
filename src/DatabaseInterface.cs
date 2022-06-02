@@ -2,7 +2,7 @@ using System;
 using System.Data;
 using System.Data.SQLite;
 using CosyKangaroo.Application;
-using CosyKangaroo.Utils;
+using CosyKangaroo.Utilities;
 
 namespace CosyKangaroo.Database {
   // Method to get database version (for testing)
@@ -142,10 +142,10 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.CommandText = "SELECT * FROM reservations";
 
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
-      List<List<string>> table = Util.GetTableData(rdr);
+      List<List<string>> table = Utils.GetTableData(rdr);
       rdr.Close();
 
-      Util.DisplayTableData("CosyKangaroo Restaurant Reservations", table);
+      Utils.DisplayTableData("CosyKangaroo Restaurant Reservations", table);
     }
 
     public static void RemoveReservation(string reservationID) {
@@ -193,8 +193,8 @@ namespace CosyKangaroo.Database {
       /*while (rdr.Read()){
         ReadSingleRow((IDataRecord)rdr);
       }*/
-      List<List<string>> table = Util.GetTableData(rdr);
-      Util.DisplayTableData("Cosy Kangaroo Orders ", table);
+      List<List<string>> table = Utils.GetTableData(rdr);
+      Utils.DisplayTableData("Cosy Kangaroo Orders ", table);
       rdr.Close();
     }
 
