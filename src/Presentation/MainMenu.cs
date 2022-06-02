@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using CosyKangaroo.Models;
+using CosyKangaroo.Application;
 
 namespace CosyKangaroo.Presentation {
   // static class to control ui views, not sure where this belongs in project structure

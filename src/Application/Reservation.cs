@@ -1,6 +1,6 @@
 using System;
 
-namespace CosyKangaroo.Models {
+namespace CosyKangaroo.Application {
   // will need to be extended
   public class Reservation {
     public Reservation(string CustomerName, int Patrons, string Date, string Time) {

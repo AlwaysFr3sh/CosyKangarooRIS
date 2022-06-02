@@ -1,6 +1,6 @@
 using System;
 
-namespace CosyKangaroo.Models {
+namespace CosyKangaroo.Application {
 
   public struct Order
   {

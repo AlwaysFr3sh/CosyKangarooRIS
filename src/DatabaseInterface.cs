@@ -1,7 +1,7 @@
 using System;
 using System.Data;
 using System.Data.SQLite;
-using CosyKangaroo.Models;
+using CosyKangaroo.Application;
 
 namespace CosyKangaroo.Database {
   // Method to get database version (for testing)

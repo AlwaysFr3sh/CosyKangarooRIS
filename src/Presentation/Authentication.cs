@@ -1,5 +1,5 @@
 using System;
-using CosyKangaroo.Models;
+using CosyKangaroo.Application;
 using CosyKangaroo.Database;
 
 namespace CosyKangaroo.Presentation {

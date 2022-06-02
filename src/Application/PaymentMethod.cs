@@ -1,6 +1,6 @@
 using System;
 
-namespace CosyKangaroo.Models {
+namespace CosyKangaroo.Application {
   class PaymentMethod {
     public PaymentMethod() {
 

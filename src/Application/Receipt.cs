@@ -1,6 +1,6 @@
 using System;
 
-namespace CosyKangaroo.Models {
+namespace CosyKangaroo.Application {
   // Will need to be extended
   class Receipt {
     public Receipt() {

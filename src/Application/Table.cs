@@ -1,6 +1,6 @@
 using System;
 
-namespace CosyKangaroo.Models {
+namespace CosyKangaroo.Application {
     public class Table{
         public Table(int pTableNumber, int pNumberOfPatrons, string pDate, string pTime){
             tableNumber = pTableNumber;

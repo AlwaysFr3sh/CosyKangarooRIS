@@ -1,4 +1,4 @@
-namespace CosyKangaroo.Models { 
+namespace CosyKangaroo.Application { 
  public class Person {
     public Person(string id, string name, string address, string phone) {
       ID = id;
@@ -10,7 +10,7 @@ namespace CosyKangaroo.Models {
     // Doesn't have an ID yet when being registered to database
     // lowkey don't like how this works
     public Person(string name, string address, string phone) {
-      ID = "";
+      ID = "-1";
       Name = name;
       Address = address;
       Phone = phone;
@@ -18,7 +18,7 @@ namespace CosyKangaroo.Models {
 
     // Default Constructor, I think this needs to be here?
     public Person() {
-      ID = "0";
+      ID = "-1";
       Name = "None";
       Address = "Default Address";
       Phone = "0";

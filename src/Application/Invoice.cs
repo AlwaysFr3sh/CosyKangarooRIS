@@ -1,6 +1,6 @@
 using System;
 
-namespace CosyKangaroo.Models {
+namespace CosyKangaroo.Application {
   class Invoice {
     public Invoice(string saleID, Order invoiceOrder, Customer invoiceCustomer, Waiter invoiceWaiter) {
       SaleID = saleID;
