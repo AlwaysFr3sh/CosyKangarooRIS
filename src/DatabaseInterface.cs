@@ -55,14 +55,18 @@ namespace CosyKangaroo.Database {
     }
 
     // an assumption I wrote in Assignment2 said we aren't doing encryption so I won't worry about that here - Tom
+    // DEPRECATED
     public static void RegisterUser(Person user, string password) {
+      bool employee = (user is Waiter);
+
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
-      sqlite_cmd.CommandText = "INSERT INTO person (username, password, phone, address) VALUES ($username, $password, $phone, $address);";
+      sqlite_cmd.CommandText = "INSERT INTO person (username, password, phone, address, employee) VALUES ($username, $password, $phone, $address, $employee);";
       sqlite_cmd.Parameters.AddWithValue("$username", user.GetName());
       sqlite_cmd.Parameters.AddWithValue("$password", password);
       sqlite_cmd.Parameters.AddWithValue("$phone", user.GetPhone());
       sqlite_cmd.Parameters.AddWithValue("$address", user.GetAddress());
+      sqlite_cmd.Parameters.AddWithValue("$employee", employee);
       sqlite_cmd.ExecuteNonQuery();
     }
 
@@ -108,7 +112,12 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.Parameters.AddWithValue("@username", username);
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
       rdr.Read();
-      Person ret = new Person(rdr.GetInt32(0).ToString(), rdr.GetString(1), rdr.GetString(3), rdr.GetString(4));
+      bool employee = rdr.GetBoolean(5);
+      Person ret;
+      if (employee)
+        ret = new Waiter(rdr.GetInt32(0).ToString(), rdr.GetString(1), rdr.GetString(3), rdr.GetString(4));
+      else
+        ret = new Customer(rdr.GetInt32(0).ToString(), rdr.GetString(1), rdr.GetString(3), rdr.GetString(4));
       rdr.Close();
 
       return ret;
@@ -125,16 +134,6 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.ExecuteNonQuery();
     }
 
-    /*public static void ShowReservations() {
-      SQLiteCommand sqlite_cmd;
-      sqlite_cmd = sqlite_conn.CreateCommand();
-      sqlite_cmd.CommandText = "SELECT * FROM reservations";
-      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
-      while (rdr.Read()){
-        ReadSingleRow((IDataRecord)rdr);
-      }
-      rdr.Close();
-    }*/
     // New Show Reservations
     public static void ShowReservations() {
       SQLiteCommand sqlite_cmd;

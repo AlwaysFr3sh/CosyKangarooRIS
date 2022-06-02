@@ -46,14 +46,30 @@ namespace CosyKangaroo.Presentation {
         phone = Console.ReadLine();
       }
 
+      // Differentiate employee from customer
+      // (lol very secure)
+      Console.WriteLine("Press 'e' to register as an Employee, or 'c' to register as Customer");
+      var employeeInput = Console.ReadLine();
+      while (employeeInput != "e" && employeeInput != "c") {
+        Console.WriteLine("please enter either 'e' or 'c'");
+        employeeInput = Console.ReadLine();
+      }
+      // convert to boolean value
+      bool employee = employeeInput == "e";
+
       // Register user into the database
       try {
-        DatabaseInterface.RegisterUser(new Person(username, address, phone), password);
+        if (employee) 
+          DatabaseInterface.RegisterUser(new Waiter(username, address, phone), password);
+        else
+          DatabaseInterface.RegisterUser(new Customer(username, address, phone), password);
+
         Console.WriteLine($"Successfully registered user: {username}");
         Console.ReadLine();
         MainMenu.Display();
-      } catch {
+      } catch (Exception e) {
         Console.WriteLine("That username already exists");
+        Console.WriteLine(e);
         Console.ReadLine();
         Display();
       }

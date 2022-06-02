@@ -9,7 +9,8 @@ CREATE TABLE IF NOT EXISTS person (
 	username TEXT UNIQUE NOT NULL,
 	password TEXT NOT NULL,
 	phone TEXT NOT NULL,
-	address TEXT NOT NULL
+	address TEXT NOT NULL,
+  employee NUMERIC NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS payment (
