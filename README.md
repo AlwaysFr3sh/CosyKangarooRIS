@@ -22,6 +22,35 @@ https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
 
 still early days so we can quite easily refactor.
 
+# Project Structure
+
+```
+.
+├── README.md
+└── src
+    ├── CosyKangarooRIS.csproj
+    ├── Program.cs
+    ├── Application
+    │   ├── Invoice.cs
+    │   ├── Order.cs
+    │   ├── Payment.cs
+    │   ├── PaymentMethod.cs
+    │   ├── Person.cs
+    │   ├── Receipt.cs
+    │   ├── Reservation.cs
+    │   └── Table.cs
+    ├── Presentation
+    │   ├── Authentication.cs
+    │   ├── MainMenu.cs
+    │   ├── OrderViews.cs
+    │   ├── ReservationViews.cs
+    │   └── View.cs
+    ├── DatabaseInterface.cs
+    ├── Schemas
+    │   └── schema.sql
+    └── mydatabase.db
+```
+
 # Run the program with dotnet cli
 
 ```
