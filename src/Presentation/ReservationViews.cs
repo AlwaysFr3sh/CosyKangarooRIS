@@ -48,7 +48,11 @@ namespace CosyKangaroo.Presentation {
       DisplayName = name;
     }
     public override void Display() {
+      Console.Clear();
       DatabaseInterface.ShowReservations();
+      Console.WriteLine("Press <Enter> to return");
+      Console.ReadLine();
+      MainMenu.Display();
     }
   }
 

@@ -144,7 +144,7 @@ namespace CosyKangaroo.Database {
       List<List<string>> table = GetTableData(rdr);
       rdr.Close();
 
-      DisplayTableData(table);
+      DisplayTableData("CosyKangaroo Restaurant Reservations", table);
     }
 
     public static void RemoveReservation(string reservationID) {
@@ -185,10 +185,19 @@ namespace CosyKangaroo.Database {
     }
 
     // Draw a table
-    public static void DisplayTableData(List<List<string>> table) {
+    public static void DisplayTableData(string title, List<List<string>> table) {
       // Get the longest string from our table, this will be our column width
       // TODO: do this for each column individually
       int columnWidth = table.SelectMany( i => i).Aggregate("", (max, cur) => max.Length > cur.Length ? max : cur).Length;
+
+      // Draw titlebar across top of table, dynamically pad sides evenly
+      // Probably a better way to do this lol
+      int paddingRight = ((columnWidth*table[0].Count) + table[0].Count);
+      int paddingLeft = (((columnWidth*table[0].Count) + table[0].Count) / 2) + (title.Length/2);
+      title = title.PadLeft(paddingLeft, '=');
+      title = title.PadRight(paddingRight, '=');
+      Console.WriteLine(title);
+
       foreach (List<string> row in table) {
         // Append whitespace to strings to fit column width
         for (int i=0; i < row.Count; i++) {
@@ -233,7 +242,7 @@ namespace CosyKangaroo.Database {
         ReadSingleRow((IDataRecord)rdr);
       }*/
       List<List<string>> table = GetTableData(rdr);
-      DisplayTableData(table);
+      DisplayTableData("Cosy Kangaroo Orders ", table);
       rdr.Close();
     }
 
