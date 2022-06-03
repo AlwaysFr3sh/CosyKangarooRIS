@@ -1,26 +1,14 @@
 # CosyKangarooRIS
 Assignment 3 for Software Architectures and Design Unit.
 
-Based on discussion in discord, I have taken the liberty of setting up a Dotnet 6 cli project in c#
 
-It's still early days so if I have jumped the gun and the group would rather use something else we can always make a new repo or just switch what we're using in this one.
-
-I installed dotnet 6 on my computer from here:
+For this project we used .Net 6:
 https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
-I set up the project using microsoft's tutorial found here:
-https://docs.microsoft.com/en-us/dotnet/core/tutorials/with-visual-studio-code?pivots=dotnet-6-0
 # Architecture
 
-To start with I was aiming for this:
-
-https://www.codeauthority.com/Blog/Entry/three-tier-architecture
-
-As our Project's architecture, although 'MVC' is also a strong option:
-
-https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller
-
-still early days so we can quite easily refactor.
+We were aiming for 3 tier/layer architecture, a good article is here:
+https://www.ibm.com/au-en/cloud/learn/three-tier-architecture
 
 # Project Structure
 
