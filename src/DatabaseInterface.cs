@@ -70,6 +70,7 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.ExecuteNonQuery();
     }
 
+    // DEPRECATED, use RowExists
     // check if user exists provided a username
     public static bool UserExists(string username) {
       SQLiteCommand sqlite_cmd;
@@ -135,7 +136,7 @@ namespace CosyKangaroo.Database {
     }
 
     // New Show Reservations
-    public static void ShowReservations() {
+    public static void ShowAllReservations() {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
       sqlite_cmd.CommandText = "SELECT * FROM reservations";
@@ -145,6 +146,19 @@ namespace CosyKangaroo.Database {
       rdr.Close();
 
       Utils.DisplayTableData("CosyKangaroo Restaurant Reservations", table);
+    }
+
+    public static void ShowReservations(string username) {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM reservations WHERE customerName = $username";
+      sqlite_cmd.Parameters.AddWithValue("$username", username);
+
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      List<List<string>> table = Utils.GetTableData(rdr);
+      rdr.Close();
+
+      Utils.DisplayTableData($"Reservations for {username}", table);
     }
 
     public static void RemoveReservation(string reservationID) {
@@ -220,5 +234,24 @@ namespace CosyKangaroo.Database {
       }
       return result;
     } 
+
+    public static void AddMenuItem(MenuItem item) {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "INSERT INTO item (name, price) VALUES ($name, $price);";
+      sqlite_cmd.Parameters.AddWithValue("$name", item.Name);
+      sqlite_cmd.Parameters.AddWithValue("$price", item.Price);
+      sqlite_cmd.ExecuteNonQuery();
+    }
+
+    public static void ShowMenu() {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM item;";
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      List<List<string>> table = Utils.GetTableData(rdr);
+      rdr.Close();
+      Utils.DisplayTableData("Cosy Kangaroo Menu", table);
+    }
   }
 }

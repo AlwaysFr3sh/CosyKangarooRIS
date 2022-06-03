@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS payment (
 
 CREATE TABLE IF NOT EXISTS reservations (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
-	customerName TEXT NOT NULL,
+	customerName TEXT NOT NULL REFERENCES person(username),
 	patrons INTEGER NOT NULL,
 	resDate TEXT NOT NULL,
 	resTime TEXT NOT NULL
