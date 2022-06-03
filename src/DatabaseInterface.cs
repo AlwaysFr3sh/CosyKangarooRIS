@@ -290,7 +290,8 @@ namespace CosyKangaroo.Database {
           Console.Write(value);
         }
       }
-      Console.ReadLine();
+      Console.WriteLine("Count of list:");
+      Console.WriteLine(result.Count);
       return result;
     }
   }
