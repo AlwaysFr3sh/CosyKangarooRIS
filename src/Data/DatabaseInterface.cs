@@ -8,7 +8,7 @@ namespace CosyKangaroo.Database {
   // Method to get database version (for testing)
   public static class DatabaseInterface {
 
-    public static string ConnectionString = "DataSource=mydatabase.db;Version=3;New=True;Compress=True;";
+    public static string ConnectionString = "DataSource=Data/mydatabase.db;Version=3;New=True;Compress=True;";
     public static SQLiteConnection sqlite_conn = new SQLiteConnection(ConnectionString);
 
     public static void OpenDatabaseConnection() {

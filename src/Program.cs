@@ -9,18 +9,7 @@ namespace CosyKangaroo {
       // Initialize database
       DatabaseInterface.OpenDatabaseConnection();
 
-      // testing views
-      /*RegistrationView registrationView = new RegistrationView("Register");
-      LoginView loginView = new LoginView("Login");
-      LogoutView logoutView = new LogoutView("logout");
-      AddReservationView addreservationView = new AddReservationView("Add Reservation");
-      ShowReservationView showreservationview = new ShowReservationView("Show Reservations");
-      AddOrderView addOrderView = new AddOrderView("Add Orders");
-      InvoiceView createInvoiceView = new InvoiceView("Create Invoice");
-      View[] views = new View[] {registrationView, loginView, logoutView, addreservationView, showreservationview, addOrderView, createInvoiceView};
-      MainMenu.AddView(views);
-      MainMenu.Display();*/
-
+      // Start program
       Bootstrap();
 
       // Close databse
@@ -41,12 +30,14 @@ namespace CosyKangaroo {
       RemoveReservationView removeReservationView = new RemoveReservationView("Cancel Reservation");
       AddOrderView addOrderView = new AddOrderView("Add Orders");
 
+      InvoiceView invoiceView = new InvoiceView("Invoice View");
+
       // Arange Views
       View[] loggedOutViews = new View[] {loginView, registrationView};
       View[] waiterViews =  new View[] {logoutView, addReservationView, showReservationView, 
-                                        removeReservationView, showMenuView, addMenuItemView, addOrderView};
+                                        removeReservationView, showMenuView, addMenuItemView, addOrderView, invoiceView};
       View[] customerViews = new View[] {logoutView, addReservationView, showReservationView, 
-                                          removeReservationView, showMenuView, addOrderView};
+                                          removeReservationView, showMenuView, addOrderView, invoiceView};
 
       MainMenu.InitializeViews(loggedOutViews, waiterViews, customerViews);
       MainMenu.Display();
