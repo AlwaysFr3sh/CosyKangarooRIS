@@ -16,31 +16,27 @@ namespace CosyKangaroo.Presentation {
         tableNumber = Console.ReadLine();
       }
       var tableNumberClean = Convert.ToInt32(tableNumber);
-      var listOfOrders = new List<List<string>>();
+      var listOfOrders = new List<string>();
 
       listOfOrders = DatabaseInterface.getInvoiceData(tableNumberClean);
 
       var listOfNames = new List<string>();
-      var listOfPrices = new List<string>();
+      var listOfPrices = new List<float>();
+      int j = 0;
+        Console.Write("Quantity\t");
+        Console.Write("Item\t");
+        Console.WriteLine("Price");
+      for(int i = 0; i < listOfOrders.Count; i+=2, j++){
+        listOfNames.Add(DatabaseInterface.getItemName(Convert.ToInt32(listOfOrders[i])));
+        float individualPrice = DatabaseInterface.getItemPrice(Convert.ToInt32(listOfOrders[i]));
+        listOfPrices.Add(individualPrice*float.Parse(listOfOrders[i+1]));
 
-      for(int i = 0; i < listOfOrders.Count; i++){
-        listOfNames.Add(DatabaseInterface.getItemName(Convert.ToInt32(listOfOrders[0][i])));
-        Console.WriteLine("Order");
-        Console.WriteLine(listOfOrders[0][i]);
-        Console.WriteLine("name");
-        Console.WriteLine(listOfNames[i]);
+        Console.Write(listOfOrders[i+1]+"\t");
+        Console.Write(listOfNames[j]+"\t");
+        Console.WriteLine(listOfPrices[j]);
       }
-
-
-
-      Console.WriteLine(listOfOrders.Count);
-      Console.WriteLine("past");
-
-      Console.WriteLine(listOfOrders[0][0]);
-      Console.WriteLine(listOfOrders[0][1]);
-      Console.WriteLine(listOfOrders[0][2]);
-      Console.WriteLine(listOfOrders[0][3]);
-      
+      float total = listOfPrices.Sum(x => x);
+      Console.Write("Total: " + total);
 
       Console.ReadLine();
       MainMenu.Display();
