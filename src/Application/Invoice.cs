@@ -7,7 +7,6 @@ namespace CosyKangaroo.Application {
       TableNumber = tableNumber;
       ItemList = items;
       Total = total;
-
     }
     private string SaleID { get; set;}
     private int TableNumber { get; set; }
