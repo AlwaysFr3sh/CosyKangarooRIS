@@ -16,8 +16,28 @@ namespace CosyKangaroo.Presentation {
         tableNumber = Console.ReadLine();
       }
       var tableNumberClean = Convert.ToInt32(tableNumber);
+      var listOfOrders = new List<string>();
 
-      DatabaseInterface.getInvoiceData(tableNumberClean);
+      listOfOrders = DatabaseInterface.getInvoiceData(tableNumberClean);
+
+      var listOfNames = new List<string>();
+      var listOfPrices = new List<float>();
+      int j = 0;
+        Console.Write("Quantity\t");
+        Console.Write("Item\t");
+        Console.WriteLine("Price");
+      for(int i = 0; i < listOfOrders.Count; i+=2, j++){
+        listOfNames.Add(DatabaseInterface.getItemName(Convert.ToInt32(listOfOrders[i])));
+        float individualPrice = DatabaseInterface.getItemPrice(Convert.ToInt32(listOfOrders[i]));
+        listOfPrices.Add(individualPrice*float.Parse(listOfOrders[i+1]));
+
+        Console.Write(listOfOrders[i+1]+"\t");
+        Console.Write(listOfNames[j]+"\t");
+        Console.WriteLine(listOfPrices[j]);
+      }
+      float total = listOfPrices.Sum(x => x);
+      Console.Write("Total: " + total);
+
       Console.ReadLine();
       MainMenu.Display();
     }
