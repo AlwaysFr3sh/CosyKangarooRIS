@@ -2,15 +2,16 @@ using System;
 
 namespace CosyKangaroo.Application {
   class Invoice {
-    public Invoice(string saleID, Order invoiceOrder, Customer invoiceCustomer, Waiter invoiceWaiter) {
+    public Invoice(string saleID, int tableNumber, List<List<string>> items, float total) {
       SaleID = saleID;
-      InvoiceOrder = invoiceOrder;
-      InvoiceCustomer = invoiceCustomer;
-      InvoiceWaiter = invoiceWaiter;
+      TableNumber = tableNumber;
+      ItemList = items;
+      Total = total;
+
     }
     private string SaleID { get; set;}
-    private Order InvoiceOrder { get; set; }
-    private Customer InvoiceCustomer { get; set; }
-    private Waiter InvoiceWaiter { get; set; }
+    private int TableNumber { get; set; }
+    private List<List<string>> ItemList { get; set; }
+    private float Total { get; set; }
   }
 }

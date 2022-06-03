@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CosyKangaroo.Application;
 using CosyKangaroo.Presentation;
 using CosyKangaroo.Database;
@@ -16,7 +16,8 @@ namespace CosyKangaroo {
       AddReservationView addreservationView = new AddReservationView("Add Reservation");
       ShowReservationView showreservationview = new ShowReservationView("Show Reservations");
       AddOrderView addOrderView = new AddOrderView("Add Orders");
-      View[] views = new View[] {registrationView, loginView, logoutView, addreservationView, showreservationview, addOrderView};
+      InvoiceView createInvoiceView = new InvoiceView("Create Invoice");
+      View[] views = new View[] {registrationView, loginView, logoutView, addreservationView, showreservationview, addOrderView, createInvoiceView};
       MainMenu.AddView(views);
       MainMenu.Display();
 

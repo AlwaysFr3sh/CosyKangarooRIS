@@ -269,5 +269,29 @@ namespace CosyKangaroo.Database {
       }
       return result;
     } 
+
+    public static List<List<string>> getInvoiceData(int tableNumber) {
+      var result = new List<List<string>>();
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT itemid, quantity FROM orders where TableNumber = " + tableNumber;
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+
+      List<string> sublist = new List<string>();
+
+      while(rdr.Read()){
+        sublist.Add(Convert.ToString(rdr["itemid"]));
+        sublist.Add(Convert.ToString(rdr["quantity"]));
+      }
+      result.Add(sublist);
+
+      foreach(var sublist2 in result){
+        foreach(var value in sublist2){
+          Console.Write(value);
+        }
+      }
+      Console.ReadLine();
+      return result;
+    }
   }
 }
