@@ -220,6 +220,7 @@ namespace CosyKangaroo.Database {
       while(rdr.Read()){
         result = rdr.GetString(1);
       }
+      rdr.Close();
       return result;
     } 
 
@@ -230,6 +231,27 @@ namespace CosyKangaroo.Database {
       sqlite_cmd.Parameters.AddWithValue("$name", item.Name);
       sqlite_cmd.Parameters.AddWithValue("$price", item.Price);
       sqlite_cmd.ExecuteNonQuery();
+    }
+
+    public static void RemoveMenuItem(MenuItem item) {
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "DELETE FROM item WHERE name = $itemName;";
+      sqlite_cmd.Parameters.AddWithValue("$itemName", item.Name);
+      sqlite_cmd.ExecuteNonQuery();
+    }
+
+    public static MenuItem GetMenuItem(string id) {
+      MenuItem ret;
+      SQLiteCommand sqlite_cmd;
+      sqlite_cmd = sqlite_conn.CreateCommand();
+      sqlite_cmd.CommandText = "SELECT * FROM item WHERE id = $id;";
+      sqlite_cmd.Parameters.AddWithValue("$id", id);
+      using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
+      rdr.Read();
+      ret = new MenuItem(rdr.GetString(1), rdr.GetDecimal(2));
+      rdr.Close();
+      return ret;
     }
 
     public static void ShowMenu() {

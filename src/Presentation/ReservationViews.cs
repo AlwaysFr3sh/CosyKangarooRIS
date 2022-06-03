@@ -58,10 +58,6 @@ namespace CosyKangaroo.Presentation {
     }
   }
 
-
-  // Currently I am just removing from the database here, however it is also an option to 
-  // add a row to the reservations table called "status" or something that we could set to "cancelled" here 
-  // instead of straight up removing it, which might be a better solution, however I will leave it like this for now
   class RemoveReservationView : View {
     public RemoveReservationView(string name) {
       DisplayName = name;
@@ -86,48 +82,6 @@ namespace CosyKangaroo.Presentation {
         DatabaseInterface.RemoveReservation(reservationID);
         Console.WriteLine($"Removed reservation id: {reservationID}");
       }
-      Console.ReadLine();
-      MainMenu.Display();
-    }
-  }
-
-  class AddMenuItemView : View {
-    public AddMenuItemView(string name) {
-      DisplayName = name;
-    }
-
-    public override void Display() {
-      Console.Clear();
-      Console.WriteLine("Enter a name");
-      var name = Console.ReadLine();
-      while (String.IsNullOrEmpty(name)) {
-        Console.WriteLine("Name cannot be empty");
-        name = Console.ReadLine();
-      }
-      Console.WriteLine("Enter a price");
-      var priceString = Console.ReadLine();
-      decimal price;
-      while (!decimal.TryParse(priceString, NumberStyles.Any, CultureInfo.InvariantCulture, out price)) {
-        Console.WriteLine("Price must be number");
-        priceString = Console.ReadLine();
-      }
-
-      DatabaseInterface.AddMenuItem(new MenuItem(name, price));
-      Console.WriteLine("Press <Enter> to return");
-      Console.ReadLine();
-      MainMenu.Display();
-    }
-  }
-
-  class ShowMenuView : View {
-    public ShowMenuView(string name) {
-      DisplayName = name;
-    }
-
-    public override void Display() {
-      Console.Clear();
-      DatabaseInterface.ShowMenu();
-      Console.WriteLine("Press <Enter> to return");
       Console.ReadLine();
       MainMenu.Display();
     }

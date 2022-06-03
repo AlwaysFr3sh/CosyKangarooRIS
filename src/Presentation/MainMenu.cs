@@ -16,6 +16,7 @@ namespace CosyKangaroo.Presentation {
     // This is so scuffed right now
     public static void Display() {
       Console.Clear();
+      Console.WriteLine("*************** Cosy Kangaroo ***************");
       if (LoggedOut())
         LoggedOutMenu();
       else if (WaiterLoggedIn())
