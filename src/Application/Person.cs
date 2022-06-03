@@ -53,6 +53,12 @@ namespace CosyKangaroo.Application {
       Address = address;
       Phone = phone;
     }
+    public Customer(string name, string address, string phone) {
+      ID = "-1";
+      Name = name;
+      Address = address;
+      Phone = phone;
+    }
 
     // TODO: Implement later, don't know how or if this will work right now.  
     public decimal GetBalance() {
@@ -71,6 +77,13 @@ namespace CosyKangaroo.Application {
 
     public Waiter(string id, string name, string address, string phone) {
       ID = id;
+      Name = name;
+      Address = address;
+      Phone = phone;
+      Tables = new List<string>();
+    }
+    public Waiter(string name, string address, string phone) {
+      ID = "-1"; 
       Name = name;
       Address = address;
       Phone = phone;

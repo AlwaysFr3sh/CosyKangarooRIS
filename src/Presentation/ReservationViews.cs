@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using CosyKangaroo.Application;
 using CosyKangaroo.Database;
 
@@ -9,12 +10,14 @@ namespace CosyKangaroo.Presentation {
     }
     public override void Display() {
       Console.Clear();
-      Console.WriteLine("Customer Name:");
+      /*Console.WriteLine("Customer Name:");
       var customerName = Console.ReadLine();
             while (String.IsNullOrEmpty(customerName)) {
         Console.WriteLine("Customer name cannot be empty");
         customerName = Console.ReadLine();
-      }
+      }*/
+      var customerName = MainMenu.LoggedInUser.GetName(); 
+
       Console.WriteLine("Number of Patrons:");
       var numOfPatrons = Console.ReadLine();
                   while (String.IsNullOrEmpty(numOfPatrons)) {
@@ -49,7 +52,11 @@ namespace CosyKangaroo.Presentation {
     }
     public override void Display() {
       Console.Clear();
-      DatabaseInterface.ShowReservations();
+      if (MainMenu.WaiterLoggedIn())
+        DatabaseInterface.ShowAllReservations();
+      else
+        DatabaseInterface.ShowReservations(MainMenu.LoggedInUser.GetName());
+
       Console.WriteLine("Press <Enter> to return");
       Console.ReadLine();
       MainMenu.Display();
@@ -67,7 +74,7 @@ namespace CosyKangaroo.Presentation {
 
     public override void Display() {
       // show reservations to display
-      DatabaseInterface.ShowReservations();
+      DatabaseInterface.ShowAllReservations();
       Console.WriteLine("Select a Reservation by ID to remove");
       var reservationID = Console.ReadLine();
       // Validate that the given id is a valid int, however we will use the string value in practice
@@ -84,6 +91,48 @@ namespace CosyKangaroo.Presentation {
         DatabaseInterface.RemoveReservation(reservationID);
         Console.WriteLine($"Removed reservation id: {reservationID}");
       }
+      Console.ReadLine();
+      MainMenu.Display();
+    }
+  }
+
+  class AddMenuItemView : View {
+    public AddMenuItemView(string name) {
+      DisplayName = name;
+    }
+
+    public override void Display() {
+      Console.Clear();
+      Console.WriteLine("Enter a name");
+      var name = Console.ReadLine();
+      while (String.IsNullOrEmpty(name)) {
+        Console.WriteLine("Name cannot be empty");
+        name = Console.ReadLine();
+      }
+      Console.WriteLine("Enter a price");
+      var priceString = Console.ReadLine();
+      decimal price;
+      while (!decimal.TryParse(priceString, NumberStyles.Any, CultureInfo.InvariantCulture, out price)) {
+        Console.WriteLine("Price must be number");
+        priceString = Console.ReadLine();
+      }
+
+      DatabaseInterface.AddMenuItem(new MenuItem(name, price));
+      Console.WriteLine("Press <Enter> to return");
+      Console.ReadLine();
+      MainMenu.Display();
+    }
+  }
+
+  class ShowMenuView : View {
+    public ShowMenuView(string name) {
+      DisplayName = name;
+    }
+
+    public override void Display() {
+      Console.Clear();
+      DatabaseInterface.ShowMenu();
+      Console.WriteLine("Press <Enter> to return");
       Console.ReadLine();
       MainMenu.Display();
     }

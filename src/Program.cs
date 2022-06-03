@@ -10,7 +10,7 @@ namespace CosyKangaroo {
       DatabaseInterface.OpenDatabaseConnection();
 
       // testing views
-      RegistrationView registrationView = new RegistrationView("Register");
+      /*RegistrationView registrationView = new RegistrationView("Register");
       LoginView loginView = new LoginView("Login");
       LogoutView logoutView = new LogoutView("logout");
       AddReservationView addreservationView = new AddReservationView("Add Reservation");
@@ -19,10 +19,37 @@ namespace CosyKangaroo {
       InvoiceView createInvoiceView = new InvoiceView("Create Invoice");
       View[] views = new View[] {registrationView, loginView, logoutView, addreservationView, showreservationview, addOrderView, createInvoiceView};
       MainMenu.AddView(views);
-      MainMenu.Display();
+      MainMenu.Display();*/
+
+      Bootstrap();
 
       // Close databse
       DatabaseInterface.CloseDatabaseConnection();
+    }
+
+    public static void Bootstrap() {
+      // Create Views
+      LoginView loginView = new LoginView("Login");
+      LogoutView logoutView = new LogoutView("Logout");
+      RegistrationView registrationView = new RegistrationView("Register");
+
+      AddMenuItemView addMenuItemView = new AddMenuItemView("Add menu Item");
+      ShowMenuView showMenuView = new ShowMenuView("View Menu");
+
+      AddReservationView addReservationView = new AddReservationView("Add Reservation");
+      ShowReservationView showReservationView = new ShowReservationView("View Reservations");
+      RemoveReservationView removeReservationView = new RemoveReservationView("Cancel Reservation");
+      AddOrderView addOrderView = new AddOrderView("Add Orders");
+
+      // Arange Views
+      View[] loggedOutViews = new View[] {loginView, registrationView};
+      View[] waiterViews =  new View[] {logoutView, addReservationView, showReservationView, 
+                                        removeReservationView, showMenuView, addMenuItemView, addOrderView};
+      View[] customerViews = new View[] {logoutView, addReservationView, showReservationView, 
+                                          removeReservationView, showMenuView, addOrderView};
+
+      MainMenu.InitializeViews(loggedOutViews, waiterViews, customerViews);
+      MainMenu.Display();
     }
   }
 }
