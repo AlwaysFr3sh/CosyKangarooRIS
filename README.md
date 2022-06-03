@@ -30,8 +30,18 @@ still early days so we can quite easily refactor.
 └── src
     ├── CosyKangarooRIS.csproj
     ├── Program.cs
+    ├── Presentation
+    │   ├── Authentication.cs
+    │   ├── InvoiceView.cs
+    │   ├── MainMenu.cs
+    │   ├── MenuItemViews.cs
+    │   ├── OrderViews.cs
+    │   ├── ReceiptView.cs
+    │   ├── ReservationViews.cs
+    │   └── View.cs
     ├── Application
     │   ├── Invoice.cs
+    │   ├── MenuItem.cs
     │   ├── Order.cs
     │   ├── Payment.cs
     │   ├── PaymentMethod.cs
@@ -39,16 +49,14 @@ still early days so we can quite easily refactor.
     │   ├── Receipt.cs
     │   ├── Reservation.cs
     │   └── Table.cs
-    ├── Presentation
-    │   ├── Authentication.cs
-    │   ├── MainMenu.cs
-    │   ├── OrderViews.cs
-    │   ├── ReservationViews.cs
-    │   └── View.cs
-    ├── DatabaseInterface.cs
-    ├── Schemas
-    │   └── schema.sql
-    └── mydatabase.db
+    ├── Data
+    │   ├── DatabaseInterface.cs
+    │   ├── Schemas
+    │   │   └── schema.sql
+    │   └── mydatabase.db
+    └── Utils
+        └── Utils.cs
+
 ```
 
 # Run the program with dotnet cli
