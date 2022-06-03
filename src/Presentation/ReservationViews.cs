@@ -10,12 +10,7 @@ namespace CosyKangaroo.Presentation {
     }
     public override void Display() {
       Console.Clear();
-      /*Console.WriteLine("Customer Name:");
-      var customerName = Console.ReadLine();
-            while (String.IsNullOrEmpty(customerName)) {
-        Console.WriteLine("Customer name cannot be empty");
-        customerName = Console.ReadLine();
-      }*/
+
       var customerName = MainMenu.LoggedInUser.GetName(); 
 
       Console.WriteLine("Number of Patrons:");

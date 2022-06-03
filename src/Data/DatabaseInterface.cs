@@ -12,7 +12,6 @@ namespace CosyKangaroo.Database {
     public static SQLiteConnection sqlite_conn = new SQLiteConnection(ConnectionString);
 
     public static void OpenDatabaseConnection() {
-      //sqlite_conn = new SQLiteConnection(ConnectionString);
       try {
         sqlite_conn.Open();
       } 
@@ -28,7 +27,6 @@ namespace CosyKangaroo.Database {
     public static string DatabaseVersion() {
       string stm = "SELECT SQLITE_VERSION()";
       using var sqlite_cmd = new SQLiteCommand(stm, sqlite_conn);
-      //string version = cmd.ExecuteScalar().ToString();
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
       rdr.Read();
       string version = rdr.GetString(0);
@@ -41,12 +39,9 @@ namespace CosyKangaroo.Database {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
       sqlite_cmd.CommandText = $"SELECT {rowName} FROM {table} WHERE {rowName} = $rowValue;";
-      //sqlite_cmd.Parameters.AddWithValue("$table", table);
-      //sqlite_cmd.Parameters.AddWithValue("$rowName", rowName);
       sqlite_cmd.Parameters.AddWithValue("$rowValue", rowValue);
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
       rdr.Read();
-      //string ret = rdr.GetValue(0).ToString();
       // the ? signifies that ret is nullable, this is to silence the warnings!!!
       string? ret = rdr.GetValue(0).ToString();
 
@@ -55,7 +50,6 @@ namespace CosyKangaroo.Database {
     }
 
     // an assumption I wrote in Assignment2 said we aren't doing encryption so I won't worry about that here - Tom
-    // DEPRECATED
     public static void RegisterUser(Person user, string password) {
       bool employee = (user is Waiter);
 
@@ -102,10 +96,6 @@ namespace CosyKangaroo.Database {
     }
 
     // For now we assume that the user actually exists
-    // Maybe later we do some exception handling or something or maybe not idk.
-    // Also...
-    // TODO: Currently we are using Person class
-    // At some point we should edit the schema so we can determine if we return Customer or Waiter class
     public static Person RetrieveUser(string username) {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
@@ -124,6 +114,7 @@ namespace CosyKangaroo.Database {
       return ret;
     }
 
+    // Add reservation
     public static void AddReservation(Reservation reservation) {
       SQLiteCommand sqlite_cmd;
       sqlite_cmd = sqlite_conn.CreateCommand();
@@ -203,9 +194,6 @@ namespace CosyKangaroo.Database {
       sqlite_cmd = sqlite_conn.CreateCommand();
       sqlite_cmd.CommandText = "SELECT * FROM orders";
       using SQLiteDataReader rdr = sqlite_cmd.ExecuteReader();
-      /*while (rdr.Read()){
-        ReadSingleRow((IDataRecord)rdr);
-      }*/
       List<List<string>> table = Utils.GetTableData(rdr);
       Utils.DisplayTableData("Cosy Kangaroo Orders ", table);
       rdr.Close();
